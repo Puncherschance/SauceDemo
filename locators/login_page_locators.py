@@ -1,5 +1,6 @@
+TITLE = '.login_logo'
 LOGIN_FIELD = '#user-name'
 PASSWORD_FIELD = '#password'
 LOGIN_BUTTON = '#login-button'
 EPIC_SADFACE = 'data-test=error'
-TITTLE = '.login_logo'
+VALIDATION_CLOSE = '.error-button'
