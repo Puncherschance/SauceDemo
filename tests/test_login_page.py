@@ -3,11 +3,11 @@ from pages.login_page import LoginPage
 from env import *
 
 
-class TestLoginPage:
+class TestHeader:
 
     def test_swag_labs_title_presented(self, page: Page, open_login_page):
         login_page = LoginPage(page)
-        login_page.check_title_has_text_('Swag Labs')
+        login_page.check_swag_labs_title_has_text_('Swag Labs')
 
 
 class TestAuthForm:
@@ -58,3 +58,8 @@ class TestValidation:
         login_page.click_login_button()
         login_page.close_validation()
         login_page.check_validation_not_shown()
+
+    def test_inventory_page_reached_only_after_authorization(self, page, open_login_page):
+        login_page = LoginPage(page)
+        login_page.open_inventory_page_by_direct_link()
+        login_page.check_validation_has_text_("Epic sadface: You can only access '/inventory.html' when you are logged in.")

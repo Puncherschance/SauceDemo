@@ -13,6 +13,10 @@ class BasePage:
     def check_url(self, endpoint):
         expect(self.page).to_have_url(BASE_URL+endpoint)
 
+    def check_outer_url(self, url):
+        self.page.wait_for_url(url)
+        expect(self.page, 'Ошибка!').to_have_url(url)
+
     def check_element_shown(self, locator):
         element = self.page.locator(locator)
         expect(element, f'Не найден элемент по локатору {locator}.').to_be_visible()

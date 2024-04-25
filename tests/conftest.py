@@ -19,12 +19,11 @@ def page(playwright):
 @pytest.fixture()
 def open_login_page(page):
     login_page = LoginPage(page)
-    login_page.open_url(LOGIN_ENDPOINT)
+    login_page.open_login_page()
 
 @pytest.fixture()
 def auth_as_standard_user(page):
     login_page = LoginPage(page)
-    login_page.open_url(LOGIN_ENDPOINT)
     login_page.enter_username_(STANDARD_USER['username'])
     login_page.enter_password_(STANDARD_USER['password'])
     login_page.click_login_button()

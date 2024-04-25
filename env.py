@@ -1,6 +1,7 @@
 BASE_URL = 'https://www.saucedemo.com/'
 LOGIN_ENDPOINT = ''
 INVENTORY_ENDPOINT = 'inventory.html'
+TWITTER_URL = 'https://twitter.com/saucelabs'
 
 
 STANDARD_USER = {
