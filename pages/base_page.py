@@ -7,8 +7,20 @@ class BasePage:
     def __init__(self, page: Page):
         self.page = page
 
+    # ACTIONS
+
     def open_url(self, endpoint):
         self.page.goto(BASE_URL + endpoint)
+
+    def click_element(self, locator):
+        element = self.page.locator(locator)
+        element.click()
+
+    def enter_data(self, locator, data):
+        element = self.page.locator(locator)
+        element.fill(data)
+
+    # VALIDATIONS
 
     def check_url(self, endpoint):
         expect(self.page).to_have_url(BASE_URL+endpoint)
@@ -32,11 +44,3 @@ class BasePage:
     def check_placeholder_text(self, locator, data):
         element = self.page.locator(locator)
         expect(element, f'Ожидался текст плейсхолдера: {data}. Получен текст плейсхолдера {element.get_attribute("placeholder")}.').to_have_attribute('placeholder', data)
-
-    def click_element(self, locator):
-        element = self.page.locator(locator)
-        element.click()
-
-    def enter_data(self, locator, data):
-        element = self.page.locator(locator)
-        element.fill(data)

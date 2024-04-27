@@ -1,8 +1,17 @@
-BASE_URL = 'https://www.saucedemo.com/'
+# INNER ENDPOINTS
+
+BASE_URL = 'https://www.saucedemo.com'
 LOGIN_ENDPOINT = ''
-INVENTORY_ENDPOINT = 'inventory.html'
+INVENTORY_ENDPOINT = '/inventory.html'
+BASKET_ENDPOINT = '/cart.html'
+
+
+# OUTER URLS
+
 TWITTER_URL = 'https://twitter.com/saucelabs'
 
+
+# CREDENTIALS
 
 STANDARD_USER = {
     'username': 'standard_user',

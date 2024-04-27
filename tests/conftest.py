@@ -3,6 +3,7 @@ import time
 
 from playwright.sync_api import Page
 from pages.login_page import LoginPage
+from pages.inventory_page import InventoryPage
 from env import *
 
 
@@ -16,19 +17,23 @@ def page(playwright):
     time.sleep(1)
     browser.close()
 
+
 @pytest.fixture()
 def open_login_page(page):
     login_page = LoginPage(page)
     login_page.open_login_page()
 
+
 @pytest.fixture()
 def auth_as_standard_user(page):
     login_page = LoginPage(page)
+    login_page.open_login_page()
     login_page.enter_username_(STANDARD_USER['username'])
     login_page.enter_password_(STANDARD_USER['password'])
     login_page.click_login_button()
 
 
-
-
-
+@pytest.fixture()
+def open_basket_page(page):
+    inventory_page = InventoryPage(page)
+    inventory_page.open_empty_basket()

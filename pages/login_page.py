@@ -7,22 +7,14 @@ import allure
 
 class LoginPage(BasePage):
 
-    @allure.step(f'Открыть страницу {BASE_URL+LOGIN_ENDPOINT}.')
-    def open_login_page(self):
-        self.open_url(endpoint=LOGIN_ENDPOINT)
-
-    @allure.step(f'Открыть страницу {BASE_URL + INVENTORY_ENDPOINT}.')
-    def open_inventory_page_by_direct_link(self):
-        self.open_url(endpoint=INVENTORY_ENDPOINT)
-
-    @allure.step('Проверить, что открылась страница "Inventory".')
-    def check_inventory_page_opened(self):
-        self.check_url(endpoint=INVENTORY_ENDPOINT)
+    # TITLE
 
     @allure.step('Проверить, что присутствует текст заголовка: {data}.')
     def check_swag_labs_title_has_text_(self, data):
         self.check_element_shown(locator=TITLE)
         self.check_element_has_text(locator=TITLE, data=data)
+
+    # LOGIN_FORM
 
     @allure.step('Проверить, что в поле "Username" присутствует плейсхолдер: {data}.')
     def check_login_field_has_placeholder_(self, data):
@@ -53,6 +45,13 @@ class LoginPage(BasePage):
         self.check_element_shown(locator=LOGIN_BUTTON)
         self.click_element(locator=LOGIN_BUTTON)
 
+    # VALIDATION
+
+    @allure.step('Проверить, что присутствует текст валидации: {data}.')
+    def check_validation_has_text_(self, data):
+        self.check_element_shown(locator=EPIC_SADFACE)
+        self.check_element_has_text(locator=EPIC_SADFACE, data=data)
+
     @allure.step('Закрыть валидацию.')
     def close_validation(self):
         self.check_element_shown(locator=VALIDATION_CLOSE)
@@ -62,7 +61,16 @@ class LoginPage(BasePage):
     def check_validation_not_shown(self):
         self.check_element_not_shown(locator=EPIC_SADFACE)
 
-    @allure.step('Проверить, что присутствует текст валидации: {data}.')
-    def check_validation_has_text_(self, data):
-        self.check_element_shown(locator=EPIC_SADFACE)
-        self.check_element_has_text(locator=EPIC_SADFACE, data=data)
+    # NAVIGATION
+
+    @allure.step(f'Открыть страницу {BASE_URL+LOGIN_ENDPOINT}.')
+    def open_login_page(self):
+        self.open_url(endpoint=LOGIN_ENDPOINT)
+
+    @allure.step(f'Открыть страницу {BASE_URL + INVENTORY_ENDPOINT}.')
+    def open_inventory_page_by_direct_link(self):
+        self.open_url(endpoint=INVENTORY_ENDPOINT)
+
+    @allure.step('Проверить, что открылась страница "Inventory".')
+    def check_inventory_page_opened(self):
+        self.check_url(endpoint=INVENTORY_ENDPOINT)
