@@ -1,5 +1,4 @@
 import pytest
-import time
 
 from playwright.sync_api import Page
 from pages.login_page import LoginPage
@@ -7,14 +6,13 @@ from pages.inventory_page import InventoryPage
 from env import *
 
 
-@pytest.fixture()
+@pytest.fixture(autouse=True)
 def page(playwright):
     browser = playwright.chromium.launch(headless=False)
     context = browser.new_context()
     page: Page = context.new_page()
     page.set_viewport_size({'height': 768, 'width': 1024})
     yield page
-    time.sleep(1)
     browser.close()
 
 

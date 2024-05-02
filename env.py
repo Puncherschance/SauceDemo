@@ -1,15 +1,17 @@
 # INNER ENDPOINTS
 
-BASE_URL = 'https://www.saucedemo.com'
+BASE_URL = 'https://www.saucedemo.com/'
 LOGIN_ENDPOINT = ''
-INVENTORY_ENDPOINT = '/inventory.html'
-BASKET_ENDPOINT = '/cart.html'
-
+INVENTORY_ENDPOINT = 'inventory.html'
+CART_ENDPOINT = 'cart.html'
+ABOUT_ENDPOINT = 'about.html'
+PRODUCT_ENDPOINT = 'inventory-item.html?id='
 
 # OUTER URLS
 
 TWITTER_URL = 'https://twitter.com/saucelabs'
-
+FACEBOOK_URL = 'https://www.facebook.com/saucelabs'
+LINKEDIN_URL = 'https://www.linkedin.com/company/sauce-labs'
 
 # CREDENTIALS
 
