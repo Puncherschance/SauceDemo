@@ -1,9 +1,12 @@
 import pytest
+import time
 
 from playwright.sync_api import Page
 from pages.login_page import LoginPage
 from pages.inventory_page import InventoryPage
 from env import *
+from resources.products import *
+from random import *
 
 
 @pytest.fixture(autouse=True)
@@ -32,6 +35,12 @@ def auth_as_standard_user(page):
 
 
 @pytest.fixture()
-def open_basket_page(page):
+def open_cart_page(page):
     inventory_page = InventoryPage(page)
-    inventory_page.open_empty_basket()
+    inventory_page.open_empty_cart()
+
+@pytest.fixture()
+def open_product_page(page):
+    inventory_page = InventoryPage(page)
+    product = INVENTORY_ITEMS[randrange(0,5)]
+    inventory_page.expand_product_description_via_clicking_product_name(product)

@@ -110,17 +110,22 @@ class TestProducts:
     @pytest.mark.parametrize('data', INVENTORY_ITEMS)
     def test_all_products_presented(self, page: Page, auth_as_standard_user, data):
         inventory_page = InventoryPage(page)
-        inventory_page.check_product_title(data)
+        inventory_page.check_product_name(data)
         inventory_page.check_product_description(data)
         inventory_page.check_product_price(data)
         inventory_page.check_product_image(data)
 
     @pytest.mark.parametrize('data', INVENTORY_ITEMS)
-    def test_product_description_expanded(self, page: Page, auth_as_standard_user, data):
+    def test_product_description_expanded_when_click_product_name(self, page: Page, auth_as_standard_user, data):
         inventory_page = InventoryPage(page)
-        inventory_page.expand_product_description_via_product_name(data)
-        inventory_page.check_product_page_opened()
+        inventory_page.expand_product_description_via_clicking_product_name(data)
+        inventory_page.check_product_page_opened(data)
 
+    @pytest.mark.parametrize('data', INVENTORY_ITEMS)
+    def test_product_description_expanded_when_click_product_image(self, page: Page, auth_as_standard_user, data):
+        inventory_page = InventoryPage(page)
+        inventory_page.expand_product_description_via_clicking_product_image(data)
+        inventory_page.check_product_page_opened(data)
 
 
 class TestFooter:

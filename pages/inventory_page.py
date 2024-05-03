@@ -102,26 +102,26 @@ class InventoryPage(BasePage):
             self.check_element_shown(locator=cart_button)
             self.click_element(locator=cart_button)
 
-    @allure.step('Проверить, что лейбл возле корзины показывает значение {data}.')
+    @allure.step('Проверить, что значок количества продуктов возле корзины показывает значение {value}.')
     def check_cart_badge_value_equal_(self, value):
         self.check_element_shown(locator=CART_BADGE)
         self.check_element_has_text(locator=CART_BADGE, data=value)
 
-    @allure.step('Проверить, что лейбл возле корзины скрыт.')
+    @allure.step('Проверить, что значок количества продуктов возле корзины скрыт.')
     def check_cart_badge_value_not_shown(self):
         self.check_element_not_shown(CART_BADGE)
 
     # SORT_MENU
 
-    @allure.step('Проверить, что присутствует поле выбора сортировки.')
+    @allure.step('Проверить, что присутствует поле выбора сортировки продуктов.')
     def check_sort_menu_shown(self):
         self.check_element_shown(locator=SORT_MENU)
 
-    @allure.step('Проверить, что присутствует кнопка "раскрыть" в поле выбора сортировки.')
+    @allure.step('Проверить, что присутствует кнопка "раскрыть" в поле выбора сортировки продуктов.')
     def check_sort_menu_button_shown(self):
         self.check_element_shown(locator=SORT_MENU_BUTTON)
 
-    @allure.step('Проверить, что присутствуют все доступные опции сортировки.')
+    @allure.step('Проверить, что присутствуют все доступные опции сортировки продуктов.')
     def check_all_sorting_options_shown(self):
         self.click_element(locator=SORT_MENU)
         self.check_element_has_text(locator=SORT_MENU, data='Name (A to Z)Name (Z to A)Price (low to high)Price (high to low)')
@@ -155,43 +155,52 @@ class InventoryPage(BasePage):
 
     # PRODUCTS
 
-    @allure.step('Проверить, что название товара отображается корректно.')
-    def check_product_title(self, data):
-        title = data['Title'][0]
-        locator = data['Title'][1]
+    @allure.step('Проверить, что название продукта отображается корректно.')
+    def check_product_name(self, data):
+        name = data['Name'][0]
+        locator = data['Name'][1]
         self.check_element_shown(locator=locator)
-        self.check_element_has_text(locator=locator, data=title)
+        self.check_element_has_text(locator=locator, data=name)
 
-    @allure.step('Проверить, что описание товара отображается корректно.')
+    @allure.step('Проверить, что описание продукта отображается корректно.')
     def check_product_description(self, data):
         description = data['Description'][0]
         locator = data['Description'][1]
         self.check_element_shown(locator=locator)
         self.check_element_has_text(locator=locator, data=description)
 
-    @allure.step('Проверить, что отображается корректная цена товара.')
+    @allure.step('Проверить, что отображается корректная цена продукта.')
     def check_product_price(self, data):
         price = data['Price'][0]
         locator = data['Price'][1]
         self.check_element_shown(locator=locator)
         self.check_element_has_text(locator=locator, data=price)
 
-    @allure.step('Проверить, что отображается изображение товара.')
+    @allure.step('Проверить, что отображается изображение продукта.')
     def check_product_image(self, data):
         locator = data['Image']
         self.check_element_shown(locator=locator)
 
-    def expand_product_description_via_product_name(self, data):
-        locator = data['Description'][1]
+    @allure.step('Открыть подробное описание продукта, кликнув на название продукта.')
+    def expand_product_description_via_clicking_product_name(self, data):
+        locator = data['Name'][1]
         self.check_element_shown(locator=locator)
+        self.click_element(locator=locator)
 
+    @allure.step('Открыть подробное описание продукта, кликнув на изображение продукта.')
+    def expand_product_description_via_clicking_product_image(self, data):
+        locator = data['Image']
+        self.check_element_shown(locator=locator)
+        self.click_element(locator=locator)
+
+    @allure.step('Проверить, что открылась "Product Page".')
     def check_product_page_opened(self, data):
-        number = data
-        self.check_url(endpoint=PRODUCT_ENDPOINT)
+        item_order = data['Order']
+        self.check_url(endpoint=PRODUCT_ENDPOINT+item_order)
 
     # FOOTER
 
-    @allure.step('Проверить, что присутствует текст Условий использования: {data}.')
+    @allure.step('Проверить, что присутствует текст Условий Использования: {data}.')
     def check_terms_of_service_has_text_(self, data):
         self.check_element_shown(locator=TERMS)
         self.check_element_has_text(locator=TERMS, data=data)
