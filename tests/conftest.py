@@ -1,9 +1,10 @@
 import pytest
-import time
 
 from playwright.sync_api import Page
 from pages.login_page import LoginPage
 from pages.inventory_page import InventoryPage
+from pages.cart_page import CartPage
+from pages.product_page import ProductPage
 from env import *
 from resources.products import *
 from random import *
@@ -20,27 +21,35 @@ def page(playwright):
 
 
 @pytest.fixture()
-def open_login_page(page):
+def login_page(page):
     login_page = LoginPage(page)
     login_page.open_login_page()
+    yield login_page
 
 
 @pytest.fixture()
-def auth_as_standard_user(page):
-    login_page = LoginPage(page)
-    login_page.open_login_page()
+def inventory_page(page, login_page):
     login_page.enter_username_(STANDARD_USER['username'])
     login_page.enter_password_(STANDARD_USER['password'])
     login_page.click_login_button()
+    inventory_page = InventoryPage(page)
+    yield inventory_page
 
 
 @pytest.fixture()
-def open_cart_page(page):
-    inventory_page = InventoryPage(page)
+def cart_page(page, inventory_page):
     inventory_page.open_empty_cart()
+    cart_page = CartPage(page)
+    yield cart_page
 
 @pytest.fixture()
-def open_product_page(page):
-    inventory_page = InventoryPage(page)
-    product = INVENTORY_ITEMS[randrange(0,5)]
-    inventory_page.expand_product_description_via_clicking_product_name(product)
+def product_page(page):
+    product_page = ProductPage(page)
+    yield product_page
+
+@pytest.fixture()
+def random_product(page, inventory_page):
+    random_product = INVENTORY_ITEMS[randrange(start=0, stop=5)]
+    inventory_page.expand_product_description_via_clicking_product_name(random_product)
+    yield random_product
+

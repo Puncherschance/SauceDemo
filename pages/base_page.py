@@ -1,65 +1,90 @@
-from playwright.sync_api import Page, expect
+from pages.base_methods import BaseMethods
+from locators.base_page_locators import *
 from env import *
 
+import allure
 
-class BasePage:
 
-    def __init__(self, page: Page):
-        self.page = page
+class BasePage(BaseMethods):
 
-    # ACTIONS
+    # TITLE
 
-    def open_url(self, endpoint):
-        self.page.goto(BASE_URL + endpoint)
+    @allure.step('Проверить, что присутствует текст заголовка: {data}.')
+    def check_swag_labs_title_has_text_(self, data):
+        self.check_element_has_text(locator=TITLE, data=data)
 
-    def click_element(self, locator):
-        element = self.page.locator(locator)
-        element.click()
+    @allure.step('Проверить, что присутствует текст заголовка: {data}.')
+    def check_page_title_has_text_(self, data):
+        self.check_element_has_text(locator=PAGE_TITLE, data=data)
 
-    def select_option(self, locator, option):
-        self.page.select_option(locator, option)
+    # HAMBURGER_MENU
 
-    def enter_data(self, locator, data):
-        element = self.page.locator(locator)
-        element.fill(data)
+    @allure.step('Проверить, что присутствует Гамбургер меню.')
+    def check_hamburger_icon_shown(self):
+        self.check_element_shown(locator=HAMBURGER)
 
-    def get_list_of(self, data):
-        elements = self.page.locator(data)
-        return elements.all_inner_texts()
+    @allure.step('Открыть Гамбургер меню.')
+    def open_hamburger_menu(self):
+        self.click_element(locator=HAMBURGER)
 
-    # VALIDATIONS
+    @allure.step('Проверить, что в Гамбургер меню присутствует текст опции: {data}.')
+    def check_hamburger_option_has_text(self, data):
+        name, locator = data[0], data[1]
+        self.check_element_has_text(locator=locator, data=name)
 
-    def check_url(self, endpoint):
-        expect(self.page, f'Ожидался url: {BASE_URL+endpoint}. Получен url: {self.page.url}.').to_have_url(BASE_URL+endpoint)
+    @allure.step('Кликнуть по опции "Reset App State".')
+    def select_reset_app_state_option(self):
+        self.click_element(locator=RESET)
 
-    def check_outer_url(self, url):
-        self.page.wait_for_url(url)
-        expect(self.page, f'Ожидался url: {url}. Получен url: {self.page.url}.').to_have_url(url)
+    @allure.step(
+        'Проверить, что кнопка "All Items" в гамбургер меню редиректит Пользователя на страницу "Inventory Page".')
+    def check_all_items_option_leads_to_iventory_page(self):
+        self.click_element(locator=ALL_ITEMS)
+        self.check_url(endpoint=INVENTORY_ENDPOINT)
 
-    def check_element_shown(self, locator):
-        element = self.page.locator(locator)
-        expect(element, f'Не найден элемент по локатору: {locator}.').to_be_visible()
+    @allure.step('Проверить, что кнопка "Logout" в гамбургер меню редиректит Пользователя на страницу "Login Page".')
+    def check_logout_option_leads_to_login_page(self):
+        self.click_element(locator=LOGOUT)
+        self.check_url(endpoint=LOGIN_ENDPOINT)
 
-    def check_element_not_shown(self, locator):
-        element = self.page.locator(locator)
-        expect(element, f'Найден элемент по локатору: {locator}.').not_to_be_visible()
+    @allure.step('Проверить, что кнопка "About" в гамбургер меню редиректит Пользователя на страницу "About Sauce Demo".')
+    def check_about_option_leads_to_about_page(self):
+        self.click_element(locator=ABOUT)
+        self.check_url(endpoint=ABOUT_ENDPOINT)
 
-    def check_element_has_text(self, locator, data):
-        element = self.page.locator(locator)
-        expect(element, f'Ожидался текст элемента: {data}. Получен текст элемента: {element.text_content()}.').to_have_text(data)
+    # CART
 
-    def check_placeholder_text(self, locator, data):
-        element = self.page.locator(locator)
-        expect(element, f'Ожидался текст плейсхолдера: {data}. Получен текст плейсхолдера: {element.get_attribute("placeholder")}.').to_have_attribute('placeholder', data)
+    @allure.step('Проверить, что присутствует кнопка "Корзина".')
+    def check_cart_icon_shown(self):
+        self.check_element_shown(locator=TITLE)
 
-    @staticmethod
-    def check_asc_sorting(data):
-        for i in range(len(data)-1):
-            item_a, item_b = data[i], data[i + 1]
-            assert (item_a <= item_b) is True, f'Некорректная сортировка значений: {item_a} и {item_b}.'
+    @allure.step('Открыть пустую корзину.')
+    def open_empty_cart(self):
+        self.click_element(locator=CART)
 
-    @staticmethod
-    def check_desc_sorting(data):
-        for i in range(len(data)-1):
-            item_a, item_b = data[i], data[i + 1]
-            assert (item_a >= item_b) is True, f'Некорректная сортировка значений: {item_a} и {item_b}.'
+    @allure.step('Проверить, что открывается пустая корзина.')
+    def check_cart_page_opened(self):
+        self.check_url(endpoint=CART_ENDPOINT)
+
+    # FOOTER
+
+    @allure.step('Проверить, что присутствует текст Условий Использования: {data}.')
+    def check_terms_of_service_has_text_(self, data):
+        self.check_element_has_text(locator=TERMS, data=data)
+
+    @allure.step('Проверить, что кнопка "Twitter" редиректит Пользователя на страницу "Twitter".')
+    def check_twitter_icon_leads_to_twitter_page(self):
+        self.click_element(locator=TWITTER)
+        self.check_outer_url(url=TWITTER_URL)
+
+    @allure.step('Проверить, что кнопка "Facebook" редиректит Пользователя на страницу "Facebook".')
+    def check_facebook_icon_leads_to_facebook_page(self):
+        self.click_element(locator=FACEBOOK)
+        self.check_outer_url(url=FACEBOOK_URL)
+
+    @allure.step('Проверить, что кнопка "LinkedIn" редиректит Пользователя на страницу "LinkedIn".')
+    def check_linkedin_icon_leads_to_linkedin_page(self):
+        self.click_element(locator=LINKEDIN)
+        self.check_outer_url(url=LINKEDIN_URL)
+
+

@@ -1,6 +1,6 @@
 # HEADER
 
-TITLE = '.login_logo'
+TITLE = '.login_logo1'
 
 # AUTHORIZATION_FORM
 
