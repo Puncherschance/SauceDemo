@@ -14,6 +14,7 @@ RESET = 'data-test=reset-sidebar-link'
 # CART
 
 CART = '.shopping_cart_link'
+CART_BADGE = '.shopping_cart_badge'
 
 # FOOTER
 

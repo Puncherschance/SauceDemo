@@ -1,4 +1,4 @@
-from pages.base_methods import BaseMethods
+from methods.base_methods import BaseMethods
 from locators.base_page_locators import *
 from env import *
 
@@ -33,7 +33,7 @@ class BasePage(BaseMethods):
         self.check_element_has_text(locator=locator, data=name)
 
     @allure.step('Кликнуть по опции "Reset App State".')
-    def select_reset_app_state_option(self):
+    def click_reset_app_state_option(self):
         self.click_element(locator=RESET)
 
     @allure.step(
@@ -59,12 +59,20 @@ class BasePage(BaseMethods):
         self.check_element_shown(locator=TITLE)
 
     @allure.step('Открыть пустую корзину.')
-    def open_empty_cart(self):
+    def open_cart(self):
         self.click_element(locator=CART)
 
     @allure.step('Проверить, что открывается пустая корзина.')
     def check_cart_page_opened(self):
         self.check_url(endpoint=CART_ENDPOINT)
+
+    @allure.step('Проверить, что значок количества продуктов возле корзины скрыт.')
+    def check_cart_badge_value_not_shown(self):
+        self.check_element_not_shown(CART_BADGE)
+
+    @allure.step('Проверить, что значок количества продуктов возле корзины показывает значение {value}.')
+    def check_cart_badge_value_equal_(self, value):
+        self.check_element_has_text(locator=CART_BADGE, data=value)
 
     # FOOTER
 

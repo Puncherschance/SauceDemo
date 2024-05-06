@@ -1,12 +1,11 @@
 from pages.base_page import BasePage
-from pages.base_methods import BaseMethods
 from locators.login_page_locators import *
 from env import *
 
 import allure
 
 
-class LoginPage(BasePage, BaseMethods):
+class LoginPage(BasePage):
 
     # TITLE
 

@@ -1,12 +1,11 @@
 from pages.base_page import BasePage
-from pages.base_methods import BaseMethods
 from locators.product_page_locators import *
 from env import *
 
 import allure
 
 
-class ProductPage(BasePage, BaseMethods):
+class ProductPage(BasePage):
 
     # TITLE
 
@@ -28,14 +27,6 @@ class ProductPage(BasePage, BaseMethods):
     @allure.step('Удалить продукт из корзины.')
     def remove_product_from_cart(self):
         self.click_element(locator=REMOVE)
-
-    @allure.step('Проверить, что значок количества продуктов возле корзины показывает значение {value}.')
-    def check_cart_badge_value_equal_(self, value):
-        self.check_element_has_text(locator=CART_BADGE, data=value)
-
-    @allure.step('Проверить, что значок количества продуктов возле корзины скрыт.')
-    def check_cart_badge_value_not_shown(self):
-        self.check_element_not_shown(CART_BADGE)
 
     # PRODUCTS
 

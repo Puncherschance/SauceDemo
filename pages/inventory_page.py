@@ -1,18 +1,22 @@
-from pages.base_methods import BaseMethods
 from pages.base_page import BasePage
-from locators.inventory_page_locators import *
 from env import *
+from resources.products import *
 
 import allure
 
 
-class InventoryPage(BasePage, BaseMethods):
+class InventoryPage(BasePage):
 
     # CART
 
     @allure.step('Добавить продукт в корзину.')
     def add_product_to_cart(self):
         self.click_element(locator=PRODUCT_1_CART)
+
+    @allure.step('Добавить случайный продукт в корзину.')
+    def add_random_product_to_cart(self, product):
+        locator = product['Add to cart Button']
+        self.click_element(locator=locator)
 
     @allure.step('Удалить продукт из корзины.')
     def remove_product_from_cart(self):
@@ -28,14 +32,6 @@ class InventoryPage(BasePage, BaseMethods):
         for cart_button in PRODUCT_CART_BUTTONS:
             self.click_element(locator=cart_button)
 
-    @allure.step('Проверить, что значок количества продуктов возле корзины показывает значение {value}.')
-    def check_cart_badge_value_equal_(self, value):
-        self.check_element_has_text(locator=CART_BADGE, data=value)
-
-    @allure.step('Проверить, что значок количества продуктов возле корзины скрыт.')
-    def check_cart_badge_value_not_shown(self):
-        self.check_element_not_shown(CART_BADGE)
-
     # SORT_MENU
 
     @allure.step('Проверить, что присутствует поле выбора сортировки продуктов.')
@@ -44,11 +40,18 @@ class InventoryPage(BasePage, BaseMethods):
 
     @allure.step('Проверить, что присутствует кнопка "раскрыть" в поле выбора сортировки продуктов.')
     def check_sort_menu_button_shown(self):
-        self.check_element_shown(locator=SORT_MENU_BUTTON)
+        pass
+
+    @allure.step('Кликнуть по меню сортировки.')
+    def click_sort_menu(self):
+        self.click_element(locator=SORT_MENU)
+
+    @allure.step('Кликнуть по кнопке со значком треугольника в меню сортировки.')
+    def click_sort_menu_button(self):
+        self.click_element(locator=SORT_MENU_BUTTON)
 
     @allure.step('Проверить, что присутствуют все доступные опции сортировки продуктов.')
     def check_all_sorting_options_shown(self):
-        self.click_element(locator=SORT_MENU)
         self.check_element_has_text(locator=SORT_MENU, data='Name (A to Z)Name (Z to A)Price (low to high)Price (high to low)')
 
     @allure.step('Отсортировать предметы по принципу {option}.')
@@ -118,6 +121,12 @@ class InventoryPage(BasePage, BaseMethods):
     @allure.step('Проверить, что открылась "Product Page".')
     def check_product_page_opened(self, data):
         item_order = data['Order']
-        self.check_url(endpoint=PRODUCT_ENDPOINT+item_order)
+        self.check_url(endpoint=PRODUCT_ENDPOINT + item_order)
+
+    @allure.step('Проверить, что текст всех кнопок "Remove" изменился на "Add to сart".')
+    def check_remove_buttons_return_to_initial_state(self):
+        for item in INVENTORY_ITEMS:
+            locator = item['Add to cart Button']
+            self.check_element_has_text(locator=locator, data='Add to cart')
 
 

@@ -1,6 +1,6 @@
 from playwright.sync_api import Page, expect
 from env import *
-
+from random import randrange
 
 class BaseMethods:
 
@@ -32,10 +32,10 @@ class BaseMethods:
     # VALIDATIONS
 
     def check_url(self, endpoint):
-        expect(self.page, f'Ожидался url: {BASE_URL+endpoint}. Получен url: {self.page.url}.').to_have_url(BASE_URL+endpoint)
+        url = BASE_URL + endpoint
+        expect(self.page, f'Ожидался url: {url}. Получен url: {self.page.url}.').to_have_url(url)
 
     def check_outer_url(self, url):
-        self.page.wait_for_url(url)
         expect(self.page, f'Ожидался url: {url}. Получен url: {self.page.url}.').to_have_url(url)
 
     def check_element_shown(self, locator):
@@ -68,10 +68,19 @@ class BaseMethods:
             item_a, item_b = data[i], data[i + 1]
             assert (item_a >= item_b) is True, f'Некорректная сортировка значений: {item_a} и {item_b}.'
 
-    # FORMATTING
+    # HELPERS
 
     @staticmethod
     def convert_to_float(data):
         for i in range(len(data)):
             data[i] = float(data[i][1:])
         return data
+
+    @staticmethod
+    def random_product():
+        random_product = randrange(start=0, stop=5)
+        return random_product
+
+    def get_pseudo_element(self):
+        pseudo_element = self.page.evaluate('window.getComputedStyle(document.querySelector(".product_sort_container"),":after").getPropertyValue("content")')
+        return pseudo_element

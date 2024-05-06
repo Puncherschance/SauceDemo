@@ -5,7 +5,7 @@ CART_BADGE = '.shopping_cart_badge'
 # SORT_MENU
 
 SORT_MENU = '.product_sort_container'
-SORT_MENU_BUTTON = '.select_container'
+SORT_MENU_BUTTON = 'css=after::'
 SORT_OPTION_AZ = '.product_sort_container [value="az"]'
 SORT_OPTION_ZA = '.product_sort_container [value="az"]'
 SORT_OPTION_LOHI = '.product_sort_container [value="lohi"]'

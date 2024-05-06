@@ -20,33 +20,46 @@ class TestHamburgerMenu:
         inventory_page.check_hamburger_icon_shown()
 
     @pytest.mark.parametrize('option', HAMBURGER_OPTIONS)
-    def test_check_hamburger_option_has_text(self, page: Page, inventory_page, option):
+    def test_check_hamburger_option_has_correct_text(self, page: Page, inventory_page, option):
+        inventory_page.open_hamburger_menu()
         inventory_page.check_hamburger_option_has_text(option)
 
-    def test_all_items_option(self, page: Page, inventory_page):
+    def test_all_items_option_leads_to_inventory_page(self, page: Page, inventory_page):
         inventory_page.open_hamburger_menu()
         inventory_page.check_all_items_option_leads_to_iventory_page()
 
     @pytest.mark.xfail(reason='Баг. Падает ошибка 403 Forbidden при открытии страницы.')
-    def test_about_option(self, page: Page, inventory_page):
+    def test_about_option_leads_to_about_page(self, page: Page, inventory_page):
         inventory_page.open_hamburger_menu()
         inventory_page.check_about_option_leads_to_about_page()
 
-    def test_logout_option(self, page: Page, inventory_page):
+    def test_logout_option_leads_to_login_page_and_logout_user(self, page: Page, inventory_page):
         inventory_page.open_hamburger_menu()
         inventory_page.check_logout_option_leads_to_login_page()
 
-    def test_reset_option(self, page: Page, auth_as_standard_user):
-        pass
+    @pytest.mark.xfail(reason='Баг. После резета страницы состояние кнопки "Remove" не возвращается к исходному.')
+    def test_reset_option_remove_products_from_cart(self, page: Page, inventory_page):
+        inventory_page.open_hamburger_menu()
+        inventory_page.add_all_products_to_cart()
+        inventory_page.click_reset_app_state_option()
+        inventory_page.check_cart_badge_value_not_shown()
+        inventory_page.check_remove_buttons_return_to_initial_state()
 
 
 class TestSortMenu:
 
-    def test_sort_menu_presented(self, page: Page, inventory_page):
+    @pytest.mark.skip('TBD')
+    def test_sort_menu_with_sort_button_shown(self, page: Page, inventory_page):
         inventory_page.check_sort_menu_shown()
         inventory_page.check_sort_menu_button_shown()
 
-    def test_all_sorting_options_shown(self, page: Page, inventory_page):
+    @pytest.mark.skip('TBD')
+    def test_all_sorting_options_shown_when_click_sort_menu(self, page: Page, inventory_page):
+        inventory_page.click_sort_menu()
+        inventory_page.check_all_sorting_options_shown()
+
+    def test_all_sorting_options_shown_when_click_sort_menu_button(self, page: Page, inventory_page):
+        inventory_page.click_sort_menu_button()
         inventory_page.check_all_sorting_options_shown()
 
     def test_alphabet_asc_sorting_correct(self, page: Page, inventory_page):
@@ -68,11 +81,11 @@ class TestSortMenu:
 
 class TestCart:
 
-    def test_cart_presented(self, page: Page, inventory_page):
+    def test_cart_icon_shown(self, page: Page, inventory_page):
         inventory_page.check_cart_icon_shown()
 
     def test_open_empty_cart(self, page: Page, inventory_page):
-        inventory_page.open_empty_cart()
+        inventory_page.open_cart()
         inventory_page.check_cart_page_opened()
 
     def test_cart_badge_appeared_when_add_product(self, page: Page, inventory_page):

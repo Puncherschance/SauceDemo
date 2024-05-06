@@ -5,7 +5,6 @@ BACK_PRODUCTS = '#back-to-products'
 # CART
 
 REMOVE = '#remove'
-CART_BADGE = '.shopping_cart_badge'
 
 # PRODUCTS
 
