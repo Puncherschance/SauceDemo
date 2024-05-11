@@ -9,31 +9,31 @@ class LoginPage(BasePage):
 
     # TITLE
 
-    @allure.step('Проверить, что присутствует текст заголовка: {data}.')
-    def check_swag_labs_title_has_text_(self, data):
-        self.check_element_has_text(locator=TITLE, data=data)
+    @allure.step('Проверить, что присутствует текст заголовка: {text}.')
+    def check_swag_labs_title_has_text_(self, text):
+        self.check_element_has_text(locator=TITLE, data=text)
 
     # LOGIN_FORM
 
-    @allure.step('Проверить, что в поле "Username" присутствует плейсхолдер: {data}.')
-    def check_login_field_has_placeholder_(self, data):
-        self.check_placeholder_text(locator=LOGIN_FIELD, data=data)
+    @allure.step('Проверить, что в поле "Username" присутствует плейсхолдер: {text}.')
+    def check_login_field_has_placeholder_(self, text: str):
+        self.check_placeholder_text(locator=LOGIN_FIELD, data=text)
 
-    @allure.step('Проверить, что в поле "Password" присутствует плейсхолдер: {data}.')
-    def check_password_field_has_placeholder_(self, data):
-        self.check_placeholder_text(locator=PASSWORD_FIELD, data=data)
+    @allure.step('Проверить, что в поле "Password" присутствует плейсхолдер: {text}.')
+    def check_password_field_has_placeholder_(self, text: str):
+        self.check_placeholder_text(locator=PASSWORD_FIELD, data=text)
 
     @allure.step('Проверить, что присутствует кнопка "Login".')
-    def check_login_button_has_text_(self, data):
-        self.check_element_has_text(locator=LOGIN_BUTTON, data=data)
+    def check_login_button_has_text_(self, text: str):
+        self.check_element_has_text(locator=LOGIN_BUTTON, data=text)
 
-    @allure.step('Ввести в поле "Username" логин: {data}.')
-    def enter_username_(self, data):
-        self.enter_data(locator=LOGIN_FIELD, data=data)
+    @allure.step('Ввести в поле "Username" логин: {text}.')
+    def enter_username_(self, text: str):
+        self.enter_data(locator=LOGIN_FIELD, data=text)
 
-    @allure.step('Ввести в поле "Password" пароль: {data}.')
-    def enter_password_(self, data):
-        self.enter_data(locator=PASSWORD_FIELD, data=data)
+    @allure.step('Ввести в поле "Password" пароль: {text}.')
+    def enter_password_(self, text: str):
+        self.enter_data(locator=PASSWORD_FIELD, data=text)
 
     @allure.step('Кликнуть по кнопке "Login".')
     def click_login_button(self):
@@ -41,9 +41,9 @@ class LoginPage(BasePage):
 
     # VALIDATION
 
-    @allure.step('Проверить, что присутствует текст валидации: {data}.')
-    def check_validation_has_text_(self, data):
-        self.check_element_has_text(locator=EPIC_SADFACE, data=data)
+    @allure.step('Проверить, что присутствует текст валидации: {text}.')
+    def check_validation_has_text_(self, text: str):
+        self.check_element_has_text(locator=VALIDATION, data=text)
 
     @allure.step('Закрыть валидацию.')
     def close_validation(self):
@@ -51,7 +51,7 @@ class LoginPage(BasePage):
 
     @allure.step('Проверить, что валидация исчезла.')
     def check_validation_not_shown(self):
-        self.check_element_not_shown(locator=EPIC_SADFACE)
+        self.check_element_not_shown(locator=VALIDATION)
 
     # NAVIGATION
 
@@ -59,9 +59,9 @@ class LoginPage(BasePage):
     def open_login_page(self):
         self.open_url(endpoint=LOGIN_ENDPOINT)
 
-    @allure.step(f'Открыть страницу {BASE_URL + INVENTORY_ENDPOINT}.')
-    def open_inventory_page_by_direct_link(self):
-        self.open_url(endpoint=INVENTORY_ENDPOINT)
+    @allure.step('Открыть страницу напрямую через url {page_endpoint}.')
+    def open_page_by_direct_url(self, page_endpoint):
+        self.open_url(endpoint=page_endpoint)
 
     @allure.step('Проверить, что открылась страница "Inventory".')
     def check_inventory_page_opened(self):

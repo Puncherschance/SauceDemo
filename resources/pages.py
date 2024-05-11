@@ -1,0 +1,8 @@
+from env import *
+
+PAGES = (
+    INVENTORY_ENDPOINT,
+    CART_ENDPOINT,
+    PRODUCT_ENDPOINT[:-4],
+    CHECKOUT_ENDPOINT,
+)

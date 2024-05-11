@@ -9,13 +9,13 @@ class BasePage(BaseMethods):
 
     # TITLE
 
-    @allure.step('Проверить, что присутствует текст заголовка: {data}.')
-    def check_swag_labs_title_has_text_(self, data):
-        self.check_element_has_text(locator=TITLE, data=data)
+    @allure.step('Проверить, что присутствует текст заголовка: {text}.')
+    def check_swag_labs_title_has_text_(self, text):
+        self.check_element_has_text(locator=TITLE, data=text)
 
-    @allure.step('Проверить, что присутствует текст заголовка: {data}.')
-    def check_page_title_has_text_(self, data):
-        self.check_element_has_text(locator=PAGE_TITLE, data=data)
+    @allure.step('Проверить, что присутствует текст заголовка: {text}.')
+    def check_page_title_has_text_(self, text):
+        self.check_element_has_text(locator=PAGE_TITLE, data=text)
 
     # HAMBURGER_MENU
 
@@ -27,9 +27,9 @@ class BasePage(BaseMethods):
     def open_hamburger_menu(self):
         self.click_element(locator=HAMBURGER)
 
-    @allure.step('Проверить, что в Гамбургер меню присутствует текст опции: {data}.')
-    def check_hamburger_option_has_text(self, data):
-        name, locator = data[0], data[1]
+    @allure.step('Проверить, что в Гамбургер меню присутствует текст опции: {hamburger_data}.')
+    def check_hamburger_option_has_text(self, hamburger_data: tuple[str]):
+        name, locator = hamburger_data[0], hamburger_data[1]
         self.check_element_has_text(locator=locator, data=name)
 
     @allure.step('Кликнуть по опции "Reset App State".')
@@ -71,14 +71,14 @@ class BasePage(BaseMethods):
         self.check_element_not_shown(CART_BADGE)
 
     @allure.step('Проверить, что значок количества продуктов возле корзины показывает значение {value}.')
-    def check_cart_badge_value_equal_(self, value):
+    def check_cart_badge_value_equal_(self, value: str):
         self.check_element_has_text(locator=CART_BADGE, data=value)
 
     # FOOTER
 
-    @allure.step('Проверить, что присутствует текст Условий Использования: {data}.')
-    def check_terms_of_service_has_text_(self, data):
-        self.check_element_has_text(locator=TERMS, data=data)
+    @allure.step('Проверить, что присутствует текст Условий Использования: {text}.')
+    def check_terms_of_service_has_text_(self, text: str):
+        self.check_element_has_text(locator=TERMS, data=text)
 
     @allure.step('Проверить, что кнопка "Twitter" редиректит Пользователя на страницу "Twitter".')
     def check_twitter_icon_leads_to_twitter_page(self):
@@ -95,4 +95,8 @@ class BasePage(BaseMethods):
         self.click_element(locator=LINKEDIN)
         self.check_outer_url(url=LINKEDIN_URL)
 
+    # NAVIGATION
 
+    @allure.step('Проверить, что пользователь переходит на страницу Checkout Page.')
+    def check_cart_page_opened(self):
+        self.check_url(endpoint=CART_ENDPOINT)
