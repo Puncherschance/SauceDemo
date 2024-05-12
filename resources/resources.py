@@ -1,4 +1,7 @@
+from locators.base_page_locators import *
 from locators.inventory_page_locators import *
+from locators.overview_page_locators import *
+from env import *
 
 
 INVENTORY_ITEMS = (
@@ -51,4 +54,20 @@ INVENTORY_ITEMS = (
                     'Order': '3',
                     'Add to cart Button': PRODUCT_6_CART,
                 },
+)
+
+HAMBURGER_OPTIONS = (
+    ('All Items', ALL_ITEMS),
+    ('About', ABOUT),
+    ('Logout', LOGOUT),
+    ('Reset App State', RESET),
+)
+
+PAGES = (
+    INVENTORY_ENDPOINT,
+    CART_ENDPOINT,
+    PRODUCT_ENDPOINT[:-4],
+    CHECKOUT_ENDPOINT,
+    OVERVIEW_ENDPOINT,
+    COMPLETE_ENDPOINT,
 )

@@ -2,6 +2,8 @@
 
 TITLE = '.app_logo'
 PAGE_TITLE = '.title'
+QTY = '.cart_quantity_label'
+DESCRIPTION = '.cart_desc_label'
 
 # HAMBURGER_MENU
 

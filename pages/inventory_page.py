@@ -1,6 +1,5 @@
 from pages.base_page import BasePage
-from env import *
-from resources.products import *
+from resources.resources import *
 
 import allure
 

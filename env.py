@@ -7,6 +7,8 @@ CART_ENDPOINT = 'cart.html'
 ABOUT_ENDPOINT = 'about.html'
 PRODUCT_ENDPOINT = 'inventory-item.html?id='
 CHECKOUT_ENDPOINT = 'checkout-step-one.html'
+OVERVIEW_ENDPOINT = 'checkout-step-two.html'
+COMPLETE_ENDPOINT = 'checkout-complete.html'
 
 # OUTER URLS
 

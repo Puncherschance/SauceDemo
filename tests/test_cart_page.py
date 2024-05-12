@@ -1,5 +1,5 @@
 from playwright.sync_api import Page
-from resources.hamburger_menu_options import *
+from resources.resources import *
 
 import pytest
 import allure
@@ -46,7 +46,7 @@ class TestHamburgerMenu:
 
     @pytest.mark.xfail(reason='Баг. После резета страницы информация по продукту продолжает отображаться.')
     @allure.title('Проверить, что кнопка "Reset App State" удаляет все продукты из корзины.')
-    def test_reset_option_remove_products_from_cart(self, page: Page, proceed_to_cart_with_random_product, cart_page):
+    def test_reset_option_remove_products_from_cart(self, page: Page, random_product, cart_page):
         cart_page.open_hamburger_menu()
         cart_page.click_reset_app_state_option()
         cart_page.check_cart_badge_value_not_shown()
@@ -98,36 +98,36 @@ class TestCart:
 class TestCartWithOneProduct:
 
     @allure.title('Проверить, что бейджик на иконке "Тележка" изменяет значение, если у пользователя есть продукт в корзине.')
-    def test_cart_icon_shown_with_badge_when_product_in_cart(self, page: Page, proceed_to_cart_with_random_product, cart_page):
+    def test_cart_icon_shown_with_badge_when_product_in_cart(self, page: Page, random_product, cart_page):
         cart_page.check_cart_badge_value_equal_('1')
 
     @allure.title('Проверить, что отображается корректное название продукта.')
-    def test_product_name_shown(self, page: Page, proceed_to_cart_with_random_product, cart_page):
-        cart_page.check_product_name_has_correct_text(proceed_to_cart_with_random_product)
+    def test_product_name_shown(self, page: Page, random_product, cart_page):
+        cart_page.check_product_name_has_correct_text(random_product)
 
     @allure.title('Проверить, что отображается корректное описание продукта.')
-    def test_product_description_shown(self, page: Page, proceed_to_cart_with_random_product, cart_page):
-        cart_page.check_product_description_has_correct_text(proceed_to_cart_with_random_product)
+    def test_product_description_shown(self, page: Page, random_product, cart_page):
+        cart_page.check_product_description_has_correct_text(random_product)
 
     @allure.title('Проверить, что отображается корректная цена продукта.')
-    def test_product_price_shown(self, page: Page, proceed_to_cart_with_random_product, cart_page):
-        cart_page.check_product_has_correct_price(proceed_to_cart_with_random_product)
+    def test_product_price_shown(self, page: Page, random_product, cart_page):
+        cart_page.check_product_has_correct_price(random_product)
 
     @allure.title('Проверить, что отображается корректное количество продукта.')
-    def test_product_qty_shown(self, page: Page, proceed_to_cart_with_random_product, cart_page):
+    def test_product_qty_shown(self, page: Page, random_product, cart_page):
         cart_page.check_product_has_qty_('1')
 
     @allure.title('Проверить, что присутствует кнопка "Remove", если у пользователя есть продукты в корзине.')
-    def test_remove_button_shown(self, page: Page, proceed_to_cart_with_random_product, cart_page):
+    def test_remove_button_shown(self, page: Page, random_product, cart_page):
         cart_page.check_remove_button_has_text_('Remove')
 
     @allure.title('Проверить, что при клике по названию продукта, пользователя редиректит на страницу Product page с корректной информацией о продукте.')
-    def test_click_on_product_name_leads_to_product_page(self, page: Page, proceed_to_cart_with_random_product, cart_page):
+    def test_click_on_product_name_leads_to_product_page(self, page: Page, random_product, cart_page):
         cart_page.click_product_name()
-        cart_page.check_product_page_opened_with_correct_product_data(proceed_to_cart_with_random_product)
+        cart_page.check_product_page_opened(random_product)
 
     @allure.title('Проверить, что кнопка "Checkout" редиректит пользователя на страницу Checkout page.')
-    def test_proceed_checkout_with_product(self, page: Page, proceed_to_cart_with_random_product, cart_page):
+    def test_proceed_checkout_with_product(self, page: Page, random_product, cart_page):
         cart_page.click_checkout_button()
         cart_page.check_checkout_page_opened()
 
@@ -135,29 +135,29 @@ class TestCartWithOneProduct:
 class TestCartWithProducts:
 
     @allure.title('Проверить, что бейджик на иконке "Тележка" изменяет значение, если у пользователя есть два продукта в корзине.')
-    def test_cart_icon_shown_with_badge_when_product_in_cart(self, page: Page, proceed_to_cart_with_two_random_products, cart_page):
+    def test_cart_icon_shown_with_badge_when_product_in_cart(self, page: Page, two_random_products, cart_page):
         cart_page.check_cart_badge_value_equal_('2')
 
     @allure.title('Проверить, что отображаются корректные названия продуктов.')
-    def test_product_names_shown(self, page: Page, proceed_to_cart_with_two_random_products, cart_page):
-        cart_page.check_product_names_has_correct_text(proceed_to_cart_with_two_random_products)
+    def test_product_names_shown(self, page: Page, two_random_products, cart_page):
+        cart_page.check_product_names_has_correct_text(two_random_products)
 
     @allure.title('Проверить, что отображаются корректные описания продуктов.')
-    def test_product_descriptions_shown(self, page: Page, proceed_to_cart_with_two_random_products, cart_page):
-        cart_page.check_product_descriptions_has_correct_text(proceed_to_cart_with_two_random_products)
+    def test_product_descriptions_shown(self, page: Page, two_random_products, cart_page):
+        cart_page.check_product_descriptions_has_correct_text(two_random_products)
 
     @allure.title('Проверить, что отображаются корректные цены продуктов.')
-    def test_product_prices_shown(self, page: Page, proceed_to_cart_with_two_random_products, cart_page):
-        cart_page.check_products_has_correct_prices(proceed_to_cart_with_two_random_products)
+    def test_product_prices_shown(self, page: Page, two_random_products, cart_page):
+        cart_page.check_products_has_correct_prices(two_random_products)
 
     @allure.title('Проверить, что отображаются корректное количество продуктов.')
-    def test_products_qty_shown(self, page: Page, proceed_to_cart_with_two_random_products, cart_page):
-        cart_page.check_products_has_qty('1')
+    def test_products_qty_shown(self, page: Page, two_random_products, cart_page):
+        cart_page.check_products_has_qty_('1')
 
     @allure.title('Проверить, что в корзине умещается максимум продуктов.')
-    def test_all_products_shown_on_product_page(self, page: Page, proceed_to_cart_with_all_products, cart_page):
+    def test_all_products_fit_on_page(self, page: Page, all_products, cart_page):
         cart_page.check_cart_badge_value_equal_('6')
-        cart_page.check_remove_button_qty_(6)
+        cart_page.check_remove_buttons_qty_(6)
 
 
 class TestFooter:

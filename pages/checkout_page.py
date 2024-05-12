@@ -61,4 +61,3 @@ class CheckoutPage(BasePage):
     @allure.step('Проверить, что валидация исчезла.')
     def check_validation_not_shown(self):
         self.check_element_not_shown(locator=VALIDATION)
-

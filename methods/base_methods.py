@@ -1,10 +1,10 @@
 from playwright.sync_api import Page, expect
-from env import *
 from config import *
 from random import randrange
-from resources.products import *
+from resources.resources import *
 
 import allure
+import datetime
 
 
 class BaseMethods:
@@ -25,12 +25,12 @@ class BaseMethods:
     def select_dropdown_option(self, locator, data):
         self.page.select_option(locator, data)
 
-    def enter_data(self, locator, data):
+    def enter_data(self, locator, data: str):
         self.check_element_shown(locator)
         element = self.page.locator(locator)
         element.fill(data)
 
-    def get_list_of(self, data):
+    def get_list_of(self, data: str) -> list[str]:
         elements = self.page.locator(data)
         return elements.all_inner_texts()
 
@@ -59,7 +59,7 @@ class BaseMethods:
             self.attach_screenshot()
             raise err
 
-    def check_dropdown_option_shown(self, locator, data):
+    def check_dropdown_option_shown(self, locator, data: str):
         try:
             element = self.page.locator(locator)
             expect(element, f'Не была найдена опция {data}.').to_contain_text(data)
@@ -75,7 +75,7 @@ class BaseMethods:
             self.attach_screenshot()
             raise err
 
-    def check_element_has_text(self, locator, data):
+    def check_element_has_text(self, locator, data: str):
         self.check_element_shown(locator)
         try:
             element = self.page.locator(locator)
@@ -84,7 +84,7 @@ class BaseMethods:
             self.attach_screenshot()
             raise err
 
-    def check_element_qty(self, locator, data):
+    def check_element_qty(self, locator, data: str):
         try:
             element = self.page.locator(locator)
             expect(element, f'Ожидалось количество элементов {data}. Получено количество элементов {element.count()}.').to_have_count(data)
@@ -92,7 +92,7 @@ class BaseMethods:
             self.attach_screenshot()
             raise err
 
-    def check_placeholder_text(self, locator, data):
+    def check_placeholder_text(self, locator, data: str):
         self.check_element_shown(locator)
         try:
             element = self.page.locator(locator)
@@ -128,6 +128,19 @@ class BaseMethods:
         return data
 
     @staticmethod
+    def calculate_tax(data: str) -> str:
+        tax = float(data.replace('$', '')) / 12.5
+        tax_rounded = '{:.2f}'.format(round(tax, 2))
+        return tax_rounded
+
+    @staticmethod
+    def calculate_total(price, tax) -> str:
+        price = price.replace('$', '')
+        total = float(price) + float(tax)
+        total_rounded = '{:.2f}'.format(round(total, 2))
+        return total_rounded
+
+    @staticmethod
     def random_number() -> int:
         random_number = randrange(start=0, stop=5)
         return random_number
@@ -145,8 +158,9 @@ class BaseMethods:
         return random_product_1, random_product_2
 
     def attach_screenshot(self):
+        current_datetime = str(datetime.datetime.now()).replace('.', ' ').replace(':', '-')
         allure.attach(
             self.page.screenshot(
-                path=str(IMAGE_DIR) + '/image.png',
+                path=str(IMAGE_DIR) + '/' + current_datetime + '.png',
                 full_page=True)
         )

@@ -1,11 +1,11 @@
 from playwright.sync_api import Page
-from resources.hamburger_menu_options import *
+from resources.resources import *
 
 import pytest
 import allure
 
 
-@pytest.mark.usefixtures('expand_description_with_random_product')
+@pytest.mark.usefixtures('expand_description')
 class TestHeader:
 
     @allure.title('Проверить, что отображается заголовок "Swag Labs".')
@@ -21,7 +21,7 @@ class TestHeader:
         product_page.check_back_to_products_button_leads_to_iventory_page()
 
 
-@pytest.mark.usefixtures('expand_description_with_random_product')
+@pytest.mark.usefixtures('expand_description')
 class TestHamburgerMenu:
 
     @allure.title('Проверить, что отображается гамбургер-меню.')
@@ -61,7 +61,7 @@ class TestHamburgerMenu:
         product_page.check_add_to_cart_button_has_text_('Add to cart')
 
 
-@pytest.mark.usefixtures('expand_description_with_random_product')
+@pytest.mark.usefixtures('expand_description')
 class TestCart:
 
     @allure.title('Проверить, что отображается иконка "Тележка".')
@@ -74,10 +74,10 @@ class TestCart:
         product_page.check_cart_page_opened()
 
     @allure.title('Проверить, корзина с продуктами успешно открывается.')
-    def test_open_cart_with_product(self, page: Page, product_page, expand_description_with_random_product):
+    def test_open_cart_with_product(self, page: Page, product_page, expand_description):
         product_page.add_product_to_cart()
         product_page.open_cart()
-        product_page.check_cart_page_opened_with_correct_product_data(expand_description_with_random_product)
+        product_page.check_cart_page_opened_with_correct_product_data(expand_description)
 
     @allure.title('Проверить, что при добавлении продукта в корзину, бейджик на иконке "Тележка" изменяет значение.')
     def test_cart_badge_appeared_when_add_product(self, page: Page, product_page):
@@ -88,20 +88,20 @@ class TestCart:
         product_page.check_cart_badge_value_not_shown()
 
 
-@pytest.mark.usefixtures('expand_description_with_random_product')
+@pytest.mark.usefixtures('expand_description')
 class TestProduct:
 
     @allure.title('Проверить, что отображается корректное название продукта.')
-    def test_product_name_shown(self, page: Page, product_page, expand_description_with_random_product):
-        product_page.check_correct_product_name_shown(expand_description_with_random_product)
+    def test_product_name_shown(self, page: Page, product_page, expand_description):
+        product_page.check_correct_product_name_shown(expand_description)
 
     @allure.title('Проверить, что отображается корректное описание продукта.')
-    def test_product_description_shown(self, page: Page, product_page, expand_description_with_random_product):
-        product_page.check_correct_product_description_shown(expand_description_with_random_product)
+    def test_product_description_shown(self, page: Page, product_page, expand_description):
+        product_page.check_correct_product_description_shown(expand_description)
 
     @allure.title('Проверить, что отображается корректная цена продукта.')
-    def test_product_price_shown(self, page: Page, product_page, expand_description_with_random_product):
-        product_page.check_correct_product_price_shown(expand_description_with_random_product)
+    def test_product_price_shown(self, page: Page, product_page, expand_description):
+        product_page.check_correct_product_price_shown(expand_description)
 
     @allure.title('Проверить, что отображается изображение продукта.')
     def test_product_image_shown(self, page: Page, product_page):

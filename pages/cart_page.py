@@ -4,17 +4,10 @@ from env import *
 
 import allure
 
+
 class CartPage(BasePage):
 
     # CART
-
-    @allure.step('Проверить, что присутствует текст заголовка: {text}.')
-    def check_qty_title_has_text_(self, text: str):
-        self.check_element_has_text(locator=QTY, data=text)
-
-    @allure.step('Проверить, что присутствует текст заголовка: {text}.')
-    def check_description_title_has_text_(self, text: str):
-        self.check_element_has_text(locator=DESCRIPTION, data=text)
 
     @allure.step('Проверить, что присутствует текст кнопки: {text}.')
     def check_continue_shopping_button_has_text_(self, text: str):
@@ -80,7 +73,7 @@ class CartPage(BasePage):
         self.check_element_has_text(locator=PRODUCT_QTY, data=value)
 
     @allure.step('Проверить, что отображается количество продукта {value} для каждого продукта.')
-    def check_products_has_qty(self, value: str):
+    def check_products_has_qty_(self, value: str):
         self.check_element_has_text(locator=PRODUCT_1_QTY, data=value)
         self.check_element_has_text(locator=PRODUCT_2_QTY, data=value)
 
@@ -92,17 +85,6 @@ class CartPage(BasePage):
     def click_product_name(self):
         self.click_element(locator=PRODUCT_NAME)
 
-    @allure.step('Проверить, что открылась страница Product Page с корректным описанием продукта.')
-    def check_product_page_opened_with_correct_product_data(self, product_data: dict[str, str]):
-        item_order = product_data['Order']
-        name = product_data['Name'][0]
-        description = product_data['Description'][0]
-        price = product_data['Price'][0]
-        self.check_url(endpoint=PRODUCT_ENDPOINT + item_order)
-        self.check_element_has_text(locator=PRODUCT_NAME, data=name)
-        self.check_element_has_text(locator=PRODUCT_DESC, data=description)
-        self.check_element_has_text(locator=PRODUCT_PRICE, data=price)
-
     @allure.step('Проверить, что информация по продукту не отображается на странице.')
     def check_product_data_not_shown(self):
         self.check_element_not_shown(locator=PRODUCT_NAME)
@@ -112,7 +94,7 @@ class CartPage(BasePage):
         self.check_element_not_shown(locator=REMOVE)
 
     @allure.step('Проверить, что отображается количество кнопок "Remove" равное {value}.')
-    def check_remove_button_qty_(self, value: str):
+    def check_remove_buttons_qty_(self, value: str):
         self.check_element_qty(locator=REMOVE, data=value)
 
     # NAVIGATION
@@ -120,3 +102,8 @@ class CartPage(BasePage):
     @allure.step('Проверить, что кнопка "Checkout" редиректит пользователя на страницу Checkout Page.')
     def check_checkout_page_opened(self):
         self.check_url(endpoint=CHECKOUT_ENDPOINT)
+
+    @allure.step('Проверить, что клие по названию продукта редиректит пользователя на страницу Product Page.')
+    def check_product_page_opened(self, product_data: dict[str, str]):
+        item_order = product_data['Order']
+        self.check_url(endpoint=PRODUCT_ENDPOINT + item_order)

@@ -1,10 +1,12 @@
 from playwright.sync_api import Page
-from resources.hamburger_menu_options import *
+from resources.resources import *
+from env import *
 
 import pytest
 import allure
 
 
+@pytest.mark.usefixtures('random_product')
 class TestHeader:
 
     @allure.title('Проверить, что отображается заголовок "Swag Labs".')
@@ -16,6 +18,7 @@ class TestHeader:
         checkout_page.check_page_title_has_text_('Checkout: Your Information')
 
 
+@pytest.mark.usefixtures('random_product')
 class TestHamburgerMenu:
 
     @allure.title('Проверить, что отображается гамбургер-меню.')
@@ -51,6 +54,7 @@ class TestHamburgerMenu:
         checkout_page.check_cart_badge_value_not_shown()
 
 
+@pytest.mark.usefixtures('random_product')
 class TestCart:
 
     @allure.title('Проверить, что присутствует иконка "Тележка".')
@@ -62,6 +66,7 @@ class TestCart:
         checkout_page.check_cart_badge_value_equal_('1')
 
 
+@pytest.mark.usefixtures('random_product')
 class TestRequisites:
 
     @allure.title('Проверить, что присутствует форма ввода реквизитов.')
@@ -83,7 +88,16 @@ class TestRequisites:
         checkout_page.click_cancel_button()
         checkout_page.check_cart_page_opened()
 
+    @allure.title('Проверить, что кнопка "Continue" редиректит пользователя на страницу Overview Page, если заполнены все реквизиты.')
+    def test_continue_button_leads_to_overview_page(self, page: Page, checkout_page):
+        checkout_page.enter_first_name_('Test')
+        checkout_page.enter_last_name_('User')
+        checkout_page.enter_postal_code_('41000')
+        checkout_page.click_continue_button()
+        checkout_page.check_url(OVERVIEW_ENDPOINT)
 
+
+@pytest.mark.usefixtures('random_product')
 class TestValidation:
 
     @allure.title('Проверить, что появляется валидация, если попытаться перейти к покупке, оставив все поля пустыми на форме ввода реквизитов.')
@@ -119,6 +133,7 @@ class TestValidation:
         checkout_page.check_validation_not_shown()
 
 
+@pytest.mark.usefixtures('random_product')
 class TestFooter:
 
     @allure.title('Проверить, что присутствует текст условий использования.')

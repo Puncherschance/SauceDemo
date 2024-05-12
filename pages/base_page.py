@@ -17,6 +17,14 @@ class BasePage(BaseMethods):
     def check_page_title_has_text_(self, text):
         self.check_element_has_text(locator=PAGE_TITLE, data=text)
 
+    @allure.step('Проверить, что присутствует текст заголовка: {text}.')
+    def check_qty_title_has_text_(self, text: str):
+        self.check_element_has_text(locator=QTY, data=text)
+
+    @allure.step('Проверить, что присутствует текст заголовка: {text}.')
+    def check_description_title_has_text_(self, text: str):
+        self.check_element_has_text(locator=DESCRIPTION, data=text)
+
     # HAMBURGER_MENU
 
     @allure.step('Проверить, что присутствует Гамбургер меню.')
@@ -100,3 +108,7 @@ class BasePage(BaseMethods):
     @allure.step('Проверить, что пользователь переходит на страницу Checkout Page.')
     def check_cart_page_opened(self):
         self.check_url(endpoint=CART_ENDPOINT)
+
+    @allure.step('Проверить, что пользователя редиректит на страницу Inventory Page.')
+    def check_inventory_page_opened(self):
+        self.check_url(endpoint=INVENTORY_ENDPOINT)

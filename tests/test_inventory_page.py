@@ -1,6 +1,5 @@
 from playwright.sync_api import Page
-from resources.products import *
-from resources.hamburger_menu_options import *
+from resources.resources import *
 
 import pytest
 import allure

@@ -62,7 +62,3 @@ class LoginPage(BasePage):
     @allure.step('Открыть страницу напрямую через url {page_endpoint}.')
     def open_page_by_direct_url(self, page_endpoint):
         self.open_url(endpoint=page_endpoint)
-
-    @allure.step('Проверить, что открылась страница "Inventory".')
-    def check_inventory_page_opened(self):
-        self.check_url(endpoint=INVENTORY_ENDPOINT)
