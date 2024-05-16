@@ -1,15 +1,15 @@
 # HEADER
 
-BACK_PRODUCTS = '#back-to-products'
+BACK_PRODUCTS = "#back-to-products"
 
 # CART
 
-REMOVE = '#remove'
+REMOVE = "#remove"
 
 # PRODUCTS
 
 PRODUCT_NAME = '[data-test="inventory-item-name"]'
 PRODUCT_DESC = '[data-test="inventory-item-desc"]'
 PRODUCT_PRICE = '[data-test="inventory-item-price"]'
-PRODUCT_IMAGE = '.inventory_details_img'
+PRODUCT_IMAGE = ".inventory_details_img"
 ADD_CART = '[data-test="add-to-cart"]'

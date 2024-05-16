@@ -1,15 +1,15 @@
-from pages.base_page import BasePage
-from locators.login_page_locators import *
-from env import *
-
 import allure
+
+from env import *
+from locators.login_page_locators import *
+from pages.base_page import BasePage
 
 
 class LoginPage(BasePage):
 
     # TITLE
 
-    @allure.step('Проверить, что присутствует текст заголовка: {text}.')
+    @allure.step("Проверить, что присутствует текст заголовка: {text}.")
     def check_swag_labs_title_has_text_(self, text):
         self.check_element_has_text(locator=TITLE, data=text)
 
@@ -41,24 +41,24 @@ class LoginPage(BasePage):
 
     # VALIDATION
 
-    @allure.step('Проверить, что присутствует текст валидации: {text}.')
+    @allure.step("Проверить, что присутствует текст валидации: {text}.")
     def check_validation_has_text_(self, text: str):
         self.check_element_has_text(locator=VALIDATION, data=text)
 
-    @allure.step('Закрыть валидацию.')
+    @allure.step("Закрыть валидацию.")
     def close_validation(self):
         self.click_element(locator=VALIDATION_CLOSE)
 
-    @allure.step('Проверить, что валидация исчезла.')
+    @allure.step("Проверить, что валидация исчезла.")
     def check_validation_not_shown(self):
         self.check_element_not_shown(locator=VALIDATION)
 
     # NAVIGATION
 
-    @allure.step(f'Открыть страницу {BASE_URL+LOGIN_ENDPOINT}.')
+    @allure.step(f"Открыть страницу {BASE_URL+LOGIN_ENDPOINT}.")
     def open_login_page(self):
         self.open_url(endpoint=LOGIN_ENDPOINT)
 
-    @allure.step('Открыть страницу напрямую через url {page_endpoint}.')
+    @allure.step("Открыть страницу напрямую через url {page_endpoint}.")
     def open_page_by_direct_url(self, page_endpoint):
         self.open_url(endpoint=page_endpoint)
