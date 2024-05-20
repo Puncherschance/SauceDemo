@@ -15,7 +15,7 @@ from resources.inventory_page_resources import INVENTORY_ITEMS
 
 @pytest.fixture(autouse=True)
 def page(playwright):
-    browser = playwright.chromium.launch(headless=False)
+    browser = playwright.chromium.launch(headless=True)
     context = browser.new_context()
     page: Page = context.new_page()
     page.set_viewport_size({"height": 768, "width": 1024})
@@ -76,6 +76,12 @@ def all_products(page, inventory_page):
 
 
 # CART_PAGE
+
+@pytest.fixture()
+def product_from_product_page(page, product_page, expand_description):
+    product_page.add_product_to_cart()
+    product_page.open_cart()
+    yield expand_description
 
 
 @pytest.fixture()

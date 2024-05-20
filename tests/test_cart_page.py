@@ -130,10 +130,11 @@ class TestCart:
         cart_page.check_user_stays_on_cart_page()
 
 
-class TestCartWithOneProduct:
+class TestCartWithSingleProduct:
 
     @allure.title(
-        'Проверить, что бейджик на иконке "Тележка" изменяет значение, если у пользователя есть продукт в корзине.'
+        'Проверить, что бейджик на иконке "Тележка" присутствует со значением "1", если у пользователя есть продукт в '
+        'корзине.'
     )
     def test_cart_icon_shown_with_badge_when_product_in_cart(
         self, page: Page, random_product, cart_page
@@ -163,7 +164,7 @@ class TestCartWithOneProduct:
         cart_page.check_remove_button_has_text_("Remove")
 
     @allure.title(
-        "Проверить, что клик по названию продукта, редиректит пользователя на страницу Product Page."
+        "Проверить, что клик по названию продукта редиректит пользователя на страницу Product Page."
     )
     def test_click_on_product_name_leads_to_product_page(
         self, page: Page, random_product, cart_page
@@ -172,17 +173,28 @@ class TestCartWithOneProduct:
         cart_page.check_product_page_opened(random_product)
 
     @allure.title(
-        'Проверить, что кнопка "Checkout" редиректит пользователя на страницу Checkout page.'
+        'Проверить, что кнопка "Checkout" редиректит пользователя на страницу Checkout Page.'
     )
     def test_proceed_checkout_with_product(self, page: Page, random_product, cart_page):
         cart_page.click_checkout_button()
         cart_page.check_checkout_page_opened()
 
+    @allure.title(
+        'Проверить, что продукт добавляется в корзину, будучи добавленным на странице Product Page.'
+    )
+    def test_add_product_from_product_page(self, page: Page, product_from_product_page, cart_page):
+        print(product_from_product_page)
+        cart_page.check_product_name_has_correct_text(product_from_product_page)
+        cart_page.check_product_description_has_correct_text(product_from_product_page)
+        cart_page.check_product_has_correct_price(product_from_product_page)
+        cart_page.check_product_has_qty_("1")
 
-class TestCartWithProducts:
+
+class TestCartWithMultipleProducts:
 
     @allure.title(
-        'Проверить, что бейджик на иконке "Тележка" изменяет значение, если у пользователя есть два продукта в корзине.'
+        'Проверить, что бейджик на иконке "Тележка" присутствует со значением "2", если у пользователя есть два '
+        'продукта в корзине.'
     )
     def test_cart_icon_shown_with_badge_when_product_in_cart(
         self, page: Page, two_random_products, cart_page
@@ -203,7 +215,7 @@ class TestCartWithProducts:
     def test_product_prices_shown(self, page: Page, two_random_products, cart_page):
         cart_page.check_products_has_correct_prices(two_random_products)
 
-    @allure.title("Проверить, что отображаются корректное количество продуктов.")
+    @allure.title("Проверить, что отображается корректное количество продуктов.")
     def test_products_qty_shown(self, page: Page, two_random_products, cart_page):
         cart_page.check_products_has_qty_("1")
 

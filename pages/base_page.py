@@ -99,7 +99,7 @@ class BasePage(BaseMethods):
 
     @allure.step("Проверить, что значок количества продуктов возле корзины скрыт.")
     def check_cart_badge_value_not_shown(self):
-        self.check_element_not_shown(CART_BADGE)
+        self.check_element_not_shown(locator=CART_BADGE)
 
     @allure.step(
         "Проверить, что значок количества продуктов возле корзины показывает значение {value}."

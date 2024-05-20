@@ -60,5 +60,5 @@ class LoginPage(BasePage):
         self.open_url(endpoint=LOGIN_ENDPOINT)
 
     @allure.step("Открыть страницу напрямую через url {page_endpoint}.")
-    def open_page_by_direct_url(self, page_endpoint):
+    def open_page_by_direct_url(self, page_endpoint: str):
         self.open_url(endpoint=page_endpoint)

@@ -81,10 +81,16 @@ class TestCart:
         checkout_page.check_cart_icon_shown()
 
     @allure.title(
-        'Проверить, что бейджик на иконке "Тележка" изменяет значение, если у пользователя есть продукт в корзине.'
+        'Проверить, что бейджик на иконке "Тележка" отображается со значением "1", если у пользователя есть продукт в '
+        'корзине.'
     )
     def test_cart_badge_shown_when_product_added(self, page: Page, checkout_page):
         checkout_page.check_cart_badge_value_equal_("1")
+
+    @allure.title("Проверить, что корзина успешно открывается.")
+    def test_open_cart(self, page: Page, checkout_page):
+        checkout_page.open_cart()
+        checkout_page.check_cart_page_opened()
 
 
 @pytest.mark.usefixtures("random_product")

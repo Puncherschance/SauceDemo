@@ -13,15 +13,15 @@ class CompletePage(BasePage):
         self.check_element_shown(locator=PONY_IMAGE)
 
     @allure.step("Проверить, что на странице присутствует текст: {text}.")
-    def check_order_dispatched_header_has_text_(self, text):
+    def check_order_dispatched_header_has_text_(self, text: str):
         self.check_element_has_text(locator=COMPLETE_HEADER, data=text)
 
     @allure.step("Проверить, что на странице присутствует текст: {text}.")
-    def check_order_dispatched_has_text_(self, text):
+    def check_order_dispatched_has_text_(self, text: str):
         self.check_element_has_text(locator=COMPLETE_TEXT, data=text)
 
     @allure.step('Проверить, что отображается кнопка "Back Home".')
-    def check_back_home_button_has_text_(self, text):
+    def check_back_home_button_has_text_(self, text: str):
         self.check_element_has_text(locator=BACK_HOME, data=text)
 
     @allure.step('Кликнуть по кнопке "Back Home".')

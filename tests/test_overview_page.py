@@ -90,9 +90,14 @@ class TestCart:
     def test_cart_badge_shown_when_product_added(self, page: Page, overview_page):
         overview_page.check_cart_badge_value_equal_("1")
 
+    @allure.title("Проверить, что корзина успешно открывается.")
+    def test_open_cart(self, page: Page, overview_page):
+        overview_page.open_cart()
+        overview_page.check_cart_page_opened()
+
 
 @pytest.mark.usefixtures("random_product")
-class TestCheckoutWithSingleProduct:
+class TestCheckoutSingleProduct:
 
     @allure.title('Проверить, что присутствует заголовок "QTY".')
     def test_qty_title_shown(self, page: Page, overview_page):
@@ -141,7 +146,7 @@ class TestCheckoutWithSingleProduct:
         overview_page.check_complete_page_opened()
 
     @allure.title(
-        "Проверить, что при клик по названию продукта, редиректит пользователя на страницу Product Page."
+        "Проверить, что при клике по названию продукта, пользователя редиректит на страницу Product Page."
     )
     def test_click_on_product_name_leads_to_product_page(
         self, page: Page, random_product, overview_page
@@ -151,7 +156,7 @@ class TestCheckoutWithSingleProduct:
 
 
 @pytest.mark.usefixtures("two_random_products")
-class TestCheckoutWithMultipleProducts:
+class TestCheckoutMultipleProducts:
 
     @allure.title("Проверить, что отображаются корректные названия продуктов.")
     def test_product_names_shown(self, page: Page, two_random_products, overview_page):
@@ -200,7 +205,7 @@ class TestPaymentData:
         overview_page.check_total_correct(random_product)
 
     @allure.title(
-        'Проверить, что присутствует колонка "Price Total" с корректной информацией, если добавлены все продукты.'
+        'Проверить, что присутствует колонка "Price Total" с корректной информацией, если добавлен максимум продуктов.'
     )
     def test_price_total_shown_multiple_products(
         self, page: Page, all_products, overview_page

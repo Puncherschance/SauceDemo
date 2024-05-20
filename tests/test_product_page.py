@@ -162,7 +162,7 @@ class TestProduct:
         product_page.check_add_to_cart_button_has_text_("Add to cart")
 
 
-@pytest.mark.usefixtures("expand_description_with_random_product")
+@pytest.mark.usefixtures("expand_description")
 class TestFooter:
 
     @allure.title("Проверить, что присутствует текст условий использования.")

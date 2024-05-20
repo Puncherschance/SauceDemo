@@ -75,10 +75,15 @@ class TestHamburgerMenu:
 @pytest.mark.usefixtures("random_product")
 class TestCart:
 
-    @allure.title('Проверить, что присутствует иконка "Тележка".')
+    @allure.title('Проверить, что присутствует иконка "Тележка" без бейджика с количеством продуктов.')
     def test_cart_icon_shown(self, page: Page, complete_page):
         complete_page.check_cart_icon_shown()
         complete_page.check_cart_badge_value_not_shown()
+
+    @allure.title("Проверить, что корзина успешно открывается.")
+    def test_open_cart(self, page: Page, complete_page):
+        complete_page.open_cart()
+        complete_page.check_cart_page_opened()
 
 
 class TestOrderDispatched:
@@ -87,7 +92,7 @@ class TestOrderDispatched:
     def test_pony_express_image_shown(self, page: Page, complete_page):
         complete_page.check_pony_express_image_shown()
 
-    @allure.title("Проверить, что присутствует текст об успешном заказе.")
+    @allure.title("Проверить, что присутствует уведомление об успешном заказе.")
     def test_order_dispatched_info_shown(self, page: Page, complete_page):
         complete_page.check_order_dispatched_header_has_text_(
             "Thank you for your order!"

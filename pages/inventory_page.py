@@ -64,12 +64,12 @@ class InventoryPage(BasePage):
     @allure.step("Проверить, что продукты сортируются по имени от меньшего к большему.")
     def check_products_sorted_by_alphabet_asc(self):
         product_names = self.get_list_of(data=PRODUCT_NAMES)
-        self.check_asc_sorting(product_names)
+        self.check_asc_sorting(data=product_names)
 
     @allure.step("Проверить, что продукты сортируются по имени от большего к меньшему.")
     def check_products_sorted_by_alphabet_desc(self):
         product_names = self.get_list_of(data=PRODUCT_NAMES)
-        self.check_desc_sorting(product_names)
+        self.check_desc_sorting(data=product_names)
 
     @allure.step(
         "Проверить, что продукты сортируются по цене от наименьшей к наибольшей."
@@ -77,7 +77,7 @@ class InventoryPage(BasePage):
     def check_products_sorted_by_price_asc(self):
         product_prices = self.get_list_of(data=PRODUCT_PRICES)
         product_prices = self.convert_to_float(product_prices)
-        self.check_asc_sorting(product_prices)
+        self.check_asc_sorting(data=product_prices)
 
     @allure.step(
         "Проверить, что продукты сортируются по цене от наибольшей к наименьшей."
@@ -85,7 +85,7 @@ class InventoryPage(BasePage):
     def check_products_sorted_by_price_desc(self):
         product_prices = self.get_list_of(data=PRODUCT_PRICES)
         product_prices = self.convert_to_float(product_prices)
-        self.check_desc_sorting(product_prices)
+        self.check_desc_sorting(data=product_prices)
 
     # PRODUCTS
 
