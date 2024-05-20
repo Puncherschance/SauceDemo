@@ -1,0 +1,30 @@
+name: Playwright Automated Tests (SauceDemo project)
+
+on:
+  workflow_dispatch:
+    inputs:
+      deployment_target:
+        description: Choose target
+        required: true
+        default:
+        type: choice
+        options:
+          - UI_SauceDemo_tests
+
+jobs:
+  UI_SauceDemo_tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+      - name: Install Chrome
+        run: sudo apt-get install google-chrome-stable
+      - name: Install Dependencies
+        if: "github.event.inputs.deployment_target == 'UI_SauceDemo_tests'"
+        run: pip install -r requirements.txt
+      - name: UI_SauceDemo_tests
+        run: pytest -m
