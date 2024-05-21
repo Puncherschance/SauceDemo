@@ -11,6 +11,11 @@ on:
         options:
           - UI_SauceDemo_tests
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
 
   UI_SauceDemo_tests:
@@ -66,7 +71,7 @@ jobs:
       - name: Download Workflow Artifacts
         uses: actions/download-artifact@v3
       - name: Upload Pages Artifact
-        uses: actions/upload-pages/artifact@v2
+        uses: actions/upload-pages-artifact@v2
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1.2.9
