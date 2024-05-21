@@ -47,9 +47,10 @@ jobs:
           distribution: 'microsoft'
           java-version: '17'
       - run: sudo wget https://github.com/allure-framework/allure2/releases/download/2.29.0/allure-2.29.0.tgz && sudo tar -zxvf allure-2.29.0.tgz -C /opt/ && sudo ln -s /opt/allure-2.29.0/bin/allure /usr/bin/allure
-      - name: Download Workflow Run Artifacts
+      - name: Download Workflow Artifacts
         uses: actions/download-artifact@v3
       - run: allure generate -c allure-results -o _site
+      - name: Store Generated Allure Report
         uses: actions/upload-artifact@v3
         with:
           name: _site
@@ -62,7 +63,7 @@ jobs:
     needs: generate_allure_report
     name: Publish Allure Report
     steps:
-      - name: Download Workflow Run Artifacts
+      - name: Download Workflow Artifacts
         uses: actions/download-artifact@v3
       - name: Upload Pages Artifact
         uses: actions/upload-pages/artifact@v2
