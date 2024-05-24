@@ -52,3 +52,72 @@ jobs:
           path:
             allure-results
           retention-days: 90
+
+
+  UI_SauceDemo_tests:
+    runs-on: ubuntu-latest
+    needs: download_history
+    name: Run UI Tests
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+      - name: Install Dependencies
+        run: python -m pip install --upgrade pip 
+             pip install -r requirements.txt
+      - name: Download Workflow Artifacts
+        uses: actions/download-artifact@v3
+      - name: Ensure Browsers are Installed
+        run: python -m playwright install --with-deps
+      - name: Run Tests
+        run: pytest --alluredir=allure-results
+      - name: Store Allure Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: allure-results
+          path:
+            allure-results
+          retention-days: 90
+
+  generate_allure_report:
+    runs-on: ubuntu-latest
+    needs: UI_SauceDemo_tests
+    name: Generate Allure Report
+    steps:
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'microsoft'
+          java-version: '17'
+      - run: >
+         sudo wget https://github.com/allure-framework/allure2/releases/download/2.29.0/allure-2.29.0.tgz
+         &&
+         sudo tar -zxvf allure-2.29.0.tgz -C /opt/ && sudo ln -s /opt/allure-2.29.0/bin/allure /usr/bin/allure
+      - name: Download Workflow Artifacts
+        uses: actions/download-artifact@v3
+      - run: allure generate -c allure-results -o _site
+      - name: Store Generated Allure Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: _site
+          path:
+            _site
+          retention-days: 90
+
+  publish_allure_report:
+    runs-on: ubuntu-latest
+    needs: generate_allure_report
+    name: Publish Allure Report
+    steps:
+      - name: Download Workflow Artifacts
+        uses: actions/download-artifact@v3
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v2
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1.2.9
+
+
+
