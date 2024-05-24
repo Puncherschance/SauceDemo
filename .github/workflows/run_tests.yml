@@ -43,7 +43,7 @@ jobs:
       - name: Unzip Artifact
         run: >
          mkdir allure-results
-         && 
+         &&
          unzip artifacts.zip -d allure-results
       - name: Store Allure History
         uses: actions/upload-artifact@v3
