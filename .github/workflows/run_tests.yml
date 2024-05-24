@@ -41,7 +41,7 @@ jobs:
          https://api.github.com/repos/puncherschance/saucedemo/actions/artifacts/$ARTIFACT_ID/zip 
          -o artifacts.zip
       - name: Unzip Artifact
-        run: mkdir allure-results && unzip artifact.zip -d allure-results
+        run: mkdir allure-results && unzip artifacts.zip -d allure-results
       - name: Store Allure History
         uses: actions/upload-artifact@v3
         with:
