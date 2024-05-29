@@ -23,7 +23,7 @@ jobs:
     name: Download History
     steps:
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - name: Download Artifact
@@ -56,11 +56,16 @@ jobs:
       - name: Unzip Artifacts
         run: mkdir allure-results && unzip artifacts.zip -d allure-results
       - name: Unzip Pages
-        run: mkdir old-pages && unzip pages.zip -d old-pages && tar -xvf old_pages/artifact.tar -C pages_history
+        run: >
+         mkdir old-pages pages_history
+         &&
+         unzip pages.zip -d old-pages
+         &&
+         tar -xvf old_pages/artifact.tar -C pages_history
       - name: Copy History
-        run: cp pages_history/history/* allure-results && cp pages_history/history allure-results
+        run: cp pages_history/history/* allure-results && cp -r pages_history/history allure-results
       - name: Store Allure History
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: allure-results
           path:
@@ -77,7 +82,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - name: Install Dependencies
@@ -90,7 +95,7 @@ jobs:
       - name: Run Tests
         run: pytest --alluredir=allure-results
       - name: Store Allure Results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: allure-results
           path:
@@ -114,7 +119,7 @@ jobs:
         uses: actions/download-artifact@v3
       - run: allure generate -c allure-results -o _site
       - name: Store Generated Allure Report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: _site
           path:
