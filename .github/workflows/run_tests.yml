@@ -92,6 +92,7 @@ jobs:
              pip install -r requirements.txt
       - name: Download Workflow Artifacts
         uses: actions/download-artifact@v3
+      - name: Rename Workflow Artifacts
         run: mv results allure-results
       - name: Ensure Browsers are Installed
         run: python -m playwright install --with-deps
