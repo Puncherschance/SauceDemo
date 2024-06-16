@@ -77,6 +77,7 @@ def all_products(page, inventory_page):
 
 # CART_PAGE
 
+
 @pytest.fixture()
 def product_from_product_page(page, product_page, expand_description):
     product_page.add_product_to_cart()

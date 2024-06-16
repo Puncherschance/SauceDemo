@@ -114,7 +114,8 @@ class BaseMethods:
             element = self.page.locator(locator)
             expect(
                 element,
-                f'Ожидался текст плейсхолдера: {data}. Получен текст плейсхолдера: {element.get_attribute("placeholder")}.',
+                f"Ожидался текст плейсхолдера: {data}. "
+                f'Получен текст плейсхолдера: {element.get_attribute("placeholder")}.',
             ).to_have_attribute("placeholder", data)
         except Exception as err:
             self.attach_screenshot()
